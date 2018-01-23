@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html expr:dir='data:blog.languageDirection' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<!DOCTYPE html>
+<html lang='ja' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
 <head>
     <b:include data='blog' name='all-head-content'/>
     <b:if cond='data:blog.pageType == &quot;index&quot;'>
-    <title><data:blog.title/></title>
-    <meta expr:content='data:blog.title' property='og:title'/>
-	<meta content='https://i.imgur.com/hiaEoLz.jpg' property='og:image'/>
-
-	<meta content='website' property='og:type'/>
-    <meta expr:content='data:blog.title' name='twitter:title'/>
-    <b:else/>
-    <title><data:blog.pageName/> | <data:blog.title/></title>
-    <b:if cond='data:post.firstImageUrl'>
-        <meta expr:content='data:post.firstImageUrl' property='og:image'/>
-        <meta expr:content='data:post.firstImageUrl' name='twitter:image'/>
-    <b:else/>
-		<meta content='https://i.imgur.com/hiaEoLz.jpg' property='og:image'/>
+      <title><data:blog.title/></title>
+      <meta expr:content='data:blog.title' property='og:title'/>
+      <meta content='https://i.imgur.com/hiaEoLz.jpg' property='og:image'/>
+      <meta content='website' property='og:type'/>
+      <meta expr:content='data:blog.title' name='twitter:title'/>
+	</b:if>
+    <b:if cond='data:blog.pageType != &quot;index&quot;'>
+      <title><data:blog.pageName/> | <data:blog.title/></title>
+	  <meta expr:content='data:blog.pageName + &quot; | &quot; + data:blog.title' property='og:title'/>
+      <meta expr:content='data:blog.pageName + &quot; | &quot; + data:blog.title' name='twitter:title'/>
+	  <meta content='article' property='og:type'/>
+      <b:if cond='data:post.firstImageUrl'>
+          <meta expr:content='data:post.firstImageUrl' property='og:image'/>
+          <meta expr:content='data:post.firstImageUrl' name='twitter:image'/>
+      <b:else/>
+          <meta content='https://i.imgur.com/hiaEoLz.jpg' property='og:image'/>
+          <meta expr:content='https://i.imgur.com/hiaEoLz.jpg' name='twitter:image'/>
+      </b:if>
     </b:if>
-	<meta content='article' property='og:type'/>
-    <meta expr:content='data:blog.pageName + &quot; | &quot; + data:blog.title' property='og:title'/>
-    <meta expr:content='data:blog.pageName + &quot; | &quot; + data:blog.title' name='twitter:title'/>
-    </b:if>
+    <meta content='viewport-fit=cover, width=device-width' name='viewport'/>
 	<meta expr:content='data:blog.url' property='og:url'/>
 	<meta expr:content='data:blog.title' property='og:site_name'/>
     <b:if cond='data:blog.metaDescription != &quot;&quot;'>
@@ -29,14 +31,16 @@
     </b:if>
 	<meta content='913501682146135' property='fb:app_id'/>
 
-    <meta content='summary' name='twitter:card'/>
+    <meta content='summary_large_image' name='twitter:card'/>
     <meta content='@xiacaのブログ' name='twitter:site'/>
     <meta expr:content='data:blog.url' name='twitter:url'/>
     <meta expr:content='data:blog.metaDescription' name='twitter:description'/>
 
 
     <b:skin><![CDATA[]]></b:skin>
-    <link href='http://pseudocodice.com/god.css' rel='stylesheet' type='text/css'/>
+    <!--
+		<link href='http://pseudocodice.com/god.css' rel='stylesheet' type='text/css'/>
+	-->
     <style>
     .html, body{
 		font-family:&quot;ヒラギノ角ゴ Pro W3&quot;, &quot;Hiragino Kaku Gothic Pro&quot;, Osaka, &quot;メイリオ&quot;, Meiryo,&quot;aahub&quot;,&quot;Monapo&quot;,&quot;IPA モナー Pゴシック&quot;, &quot;IPAMonaPGothic&quot;,&quot;ARISAKA-AA&quot;,&quot;MS Pゴシック&quot;, &quot;ＭＳ&#12288;Ｐゴシック&quot;, &quot;MS PGothic&quot;,sans-serif;
@@ -45,7 +49,18 @@
         margin-left : auto;
 		text-align:center;
     }
+    .blog-title-header{
+		padding-top:15px;
+    }
+	.blog-title-header .description{
+		color:#bbb;
+		font-size:12px;
+		margin-left:auto;
+		margin-right:auto;
+		width:70%;
+    }
 	.blog-title-header a{
+		text-align:center;
         color:#000;
         text-decoration:none;
     }
@@ -58,7 +73,7 @@
         text-decoration:none;
 		border-radius:3px;
 		text-align:left;
-		border:1px solid #222;
+		box-shadow:0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
 		padding:20px 10px 10px;
 		margin:40px 10px;
         display: -webkit-flex;
@@ -69,12 +84,26 @@
 		justify-content: flex-start;
 		align-items: flex-start;
     }
+	.flex:hover{
+		background-color:#eee;
+     }
 	.flex .flex-item{
 		margin:0px 5px;	
     }
+	.flex-item-img{
+		min-width:150px;
+        min-height:100px;
+        overflow:hidden;
+        position:relative;    
+	}
 	.flex .flex-item img{
-		width:100%;
-    }
+        position: absolute;
+        left: -100%;
+        right: -100%;
+        margin: auto;
+        width: 100%;
+        height: auto;    
+	}
 	.flex .flex-item h1{
 		padding:0px;
 		margin:0px;
@@ -85,6 +114,15 @@
 		margin-top:8px;
 		color:#666;
 		font-size:13px;
+    }
+    @media (max-width: 600px) {
+      .flex-item-img{
+          min-width:100px;
+          min-height:100px;
+      }
+		.flex .flex-item h1{
+            font-size:18px;
+        }
     }
 	/* ブログ記事用のCSS */
     twitterwidget,iframe[id^=&quot;twitter-widget-&quot;] {
@@ -113,6 +151,9 @@
 <body>
 <header class='blog-title-header'>
   <a expr:href='data:blog.homepageUrl'><h1><data:blog.title/></h1></a>
+  <b:if cond='data:blog.metaDescription != &quot;&quot;'>
+    <div class='description'>Go / Ionic / PWA / 仮想通貨 / NEM / ZAIFトークン / ecobit / ガルトラ難民 / AA / アスキーアート / 将棋 / </div>
+  </b:if>
 </header>
 <b:section class='main' id='main' showaddelement='no'>
   <b:widget id='Blog1' locked='true' title='ブログの投稿' type='Blog' version='1'>
@@ -601,7 +642,7 @@
 	<b:if cond='data:blog.pageType == &quot;index&quot;'>
 	  <a class='post-index' expr:href='data:post.url'>
         <div class='post hentry uncustomized-post-template flex'>
-		  <div class='flex-item img'>
+		  <div class='flex-item flex-item-img'>
             <b:if cond='data:post.firstImageUrl'>
                 <img expr:src='resizeImage(data:post.firstImageUrl, 200)'/>
                 <meta expr:content='data:post.firstImageUrl' itemprop='image_url'/>
@@ -935,25 +976,8 @@
   </b:widget>
 </b:section>
 
-
     <div id='footer-right'>
-        <b:section class='footer' id='footer-r' preferred='yes'>
-          <b:widget id='Label1' locked='false' title='ラベル' type='Label' version='1'>
-            <b:widget-settings>
-              <b:widget-setting name='sorting'>ALPHA</b:widget-setting>
-              <b:widget-setting name='display'>LIST</b:widget-setting>
-              <b:widget-setting name='selectedLabelsList'/>
-              <b:widget-setting name='showType'>ALL</b:widget-setting>
-              <b:widget-setting name='showFreqNumbers'>false</b:widget-setting>
-            </b:widget-settings>
-            <b:includable id='main'>
-          <b:if cond='data:title'>
-            <h2><data:title/></h2>
-          </b:if>
-        </b:includable>
-          </b:widget>
-        </b:section>
+        <b:section class='footer' id='footer-r' preferred='yes'/>
     </div>
-      
 </body>
 </html>
