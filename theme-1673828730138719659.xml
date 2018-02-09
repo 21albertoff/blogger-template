@@ -15,9 +15,9 @@
 	  <meta expr:content='data:blog.pageName + &quot; | &quot; + data:blog.title' property='og:title'/>
       <meta expr:content='data:blog.pageName + &quot; | &quot; + data:blog.title' name='twitter:title'/>
 	  <meta content='article' property='og:type'/>
-      <b:if cond='data:post.firstImageUrl'>
-          <meta expr:content='data:post.firstImageUrl' property='og:image'/>
-          <meta expr:content='data:post.firstImageUrl' name='twitter:image'/>
+      <b:if cond='data:blog.postImageThumbnailUrl'>
+          <meta expr:content='data:blog.postImageThumbnailUrl' property='og:image'/>
+          <meta expr:content='data:blog.postImageThumbnailUrl' name='twitter:image'/>
       <b:else/>
           <meta content='https://i.imgur.com/hiaEoLz.jpg' property='og:image'/>
           <meta expr:content='https://i.imgur.com/hiaEoLz.jpg' name='twitter:image'/>
@@ -132,13 +132,17 @@
 	.entry-title{
 		font-size:24px;
 		text-align:left;
-		padding:20px 20px 10px;
-		margin-bottom:5px;
+		padding:0px 20px 10px;
+		margin:0px 0px 5px;
     }
 	.entry-content{
 		font-size:18px;
 		text-align:left;
 		padding:5px 20px;
+    }
+	.entry-content h2, .entry-content h3, .entry-content h4{
+		border-left:6px solid #ccc;
+		padding:.25em 0 .25em .75em;
     }
 	.blog-pager{
 		padding:5px 20px;
@@ -152,14 +156,16 @@
 <header class='blog-title-header'>
   <a expr:href='data:blog.homepageUrl'><h1><data:blog.title/></h1></a>
   <b:if cond='data:blog.metaDescription != &quot;&quot;'>
-    <div class='description'>Go / Ionic / PWA / 仮想通貨 / NEM / ZAIFトークン / ecobit / ガルトラ難民 / AA / アスキーアート / 将棋 / </div>
+	<b:if cond='data:blog.pageType == &quot;index&quot;'>
+    	<div class='description'>Go / Ionic / PWA / 仮想通貨 / NEM / ZAIFトークン / ecobit / ガルトラ難民 / AA / アスキーアート / 将棋 / </div>
+	</b:if>
   </b:if>
 </header>
 <b:section class='main' id='main' showaddelement='no'>
   <b:widget id='Blog1' locked='true' title='ブログの投稿' type='Blog' version='1'>
     <b:widget-settings>
       <b:widget-setting name='commentLabel'>comments</b:widget-setting>
-      <b:widget-setting name='showShareButtons'>true</b:widget-setting>
+      <b:widget-setting name='showShareButtons'>false</b:widget-setting>
       <b:widget-setting name='authorLabel'>Posted by</b:widget-setting>
       <b:widget-setting name='style.unittype'>TextAndImage</b:widget-setting>
       <b:widget-setting name='timestampLabel'>at</b:widget-setting>
@@ -176,11 +182,11 @@
       <b:widget-setting name='showCommentLink'>false</b:widget-setting>
       <b:widget-setting name='style.urlcolor'>#008000</b:widget-setting>
       <b:widget-setting name='postLocationLabel'>Location:</b:widget-setting>
-      <b:widget-setting name='showAuthor'>true</b:widget-setting>
+      <b:widget-setting name='showAuthor'>false</b:widget-setting>
       <b:widget-setting name='style.linkcolor'>#0000ff</b:widget-setting>
       <b:widget-setting name='style.bgcolor'>#ffffff</b:widget-setting>
-      <b:widget-setting name='showLabels'>true</b:widget-setting>
-      <b:widget-setting name='postLabelsLabel'>Labels:</b:widget-setting>
+      <b:widget-setting name='showLabels'>false</b:widget-setting>
+      <b:widget-setting name='postLabelsLabel'>ラベル</b:widget-setting>
       <b:widget-setting name='showBacklinks'>false</b:widget-setting>
       <b:widget-setting name='showInlineAds'>false</b:widget-setting>
       <b:widget-setting name='showReactions'>false</b:widget-setting>
@@ -583,7 +589,7 @@
                   <data:top.timestampLabel/>
                   <b:if cond='data:post.url'>
                     <meta expr:content='data:post.url.canonical' itemprop='url'/>
-                    <a class='timestamp-link' expr:href='data:post.url' rel='bookmark' title='permanent link'><abbr class='published' expr:title='data:post.timestampISO8601' itemprop='datePublished'><data:post.timestamp/></abbr></a>
+                    <a class='timestamp-link' expr:href='data:post.url' rel='bookmark' title='permanent link'><abbr class='published' expr:title='data:post.timestampISO8601' itemprop='date ed updated'><data:post.timestamp/></abbr></a>
                   </b:if>
                 </b:if>
               </span>
@@ -680,6 +686,8 @@
     <b:else/>
       <div class='post hentry uncustomized-post-template'>
         <a expr:name='data:post.id'/>
+		<div class='post-header'>
+		<span class='author' style='color:#fefefe;font-size:8px;'>By <data:post.author/>.</span>
         <b:if cond='data:post.title'>
           <h1 class='post-title entry-title'>
          <b:if cond='data:post.link'>
@@ -691,8 +699,10 @@
               <data:post.title/>
             </b:if>
          </b:if>
+			
           </h1>
         </b:if>
+        </div>
             <div class='post-body entry-content'>
                 <data:post.body/>
                 <div style='clear: both;'/> <!-- clear for photos floats -->
